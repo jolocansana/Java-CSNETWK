@@ -1,14 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.net.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import java.net.URL?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.ServerControl"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ServerControl">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Pane prefHeight="600.0" prefWidth="1024.0" GridPane.columnIndex="1">
+         <children>
+            <Pane fx:id="sidebarContent" layoutX="-10.0" layoutY="70.0" prefHeight="530.0" prefWidth="268.0" style="-fx-border-color: F0F0F0;">
+               <children>
+                  <Group fx:id="postSidebar" visible="false">
+                     <children>
+                        <Text fx:id="portDisplay" fill="#797676" layoutX="25.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listening on port " wrappingWidth="195.17822265625">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="serverNameDisplay" layoutX="25.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text" text="Server Name">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="25.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Members:" wrappingWidth="113.17822265625">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="serverDescDisplay" layoutX="25.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server description">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <TextArea fx:id="activeMembers" editable="false" layoutX="23.0" layoutY="265.0" prefHeight="200.0" prefWidth="206.0" />
+                     </children>
+                  </Group>
+                  <Group fx:id="preSidebar">
+                     <children>
+                        <TextField fx:id="serverPortField" layoutX="23.0" layoutY="266.0" />
+                        <TextField fx:id="serverNameField" layoutX="23.0" layoutY="50.0" />
+                        <Button layoutX="23.0" layoutY="318.0" mnemonicParsing="false" onAction="#startServer" text="Create Server" />
+                        <Text fx:id="bodyHeaderContent2" layoutX="23.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Name" wrappingWidth="181.17822265625">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="bodyHeaderContent21" layoutX="23.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Description" wrappingWidth="181.17822265625">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <TextArea fx:id="serverDescriptionField" layoutX="23.0" layoutY="127.0" prefHeight="92.0" prefWidth="200.0" />
+                        <Text fx:id="bodyHeaderContent22" layoutX="23.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Port" wrappingWidth="181.17822265625">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Group>
+               </children></Pane>
+            <Pane fx:id="sidebarHeader" layoutX="-10.0" prefHeight="70.0" prefWidth="268.0" style="-fx-border-color: F0F0F0;">
+               <children>
+                  <Text layoutX="25.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text" text="DLSUsap" wrappingWidth="113.17822265625">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Text>
+               </children></Pane>
+            <Pane fx:id="bodyHeader" layoutX="256.0" prefHeight="70.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
+               <children>
+                  <Text fx:id="bodyHeaderContent" layoutX="30.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Dashboard" wrappingWidth="181.17822265625">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+               </children></Pane>
+            <Pane fx:id="bodyContent" layoutX="256.0" layoutY="70.0" prefHeight="530.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
+               <children>
+                  <Group fx:id="postBody" visible="false">
+                     <children>
+                        <ScrollPane fx:id="scrollPane" layoutX="47.0" layoutY="68.0" prefHeight="430.0" prefViewportHeight="410.0" prefViewportWidth="675.0" prefWidth="675.0" style="-fx-background-color: white; -fx-border: 0px;">
+                           <content>
+                              <TextFlow fx:id="textFlow" layoutX="45.0" layoutY="20.0" prefHeight="430.0" prefWidth="675.0" style="-fx-background-color: white; -fx-font-size: 16;" />
+                           </content>
+                        </ScrollPane>
+                        <Text fx:id="bodyHeaderContent1" layoutX="47.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Message Log" wrappingWidth="181.17822265625">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="653.0" layoutY="21.0" mnemonicParsing="false" onAction="#saveLog" text="Save Log" />
+                     </children>
+                  </Group>
+               </children></Pane>
+         </children></Pane>
+   </children>
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
+</GridPane>

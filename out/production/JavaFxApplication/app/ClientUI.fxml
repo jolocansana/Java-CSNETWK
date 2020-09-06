@@ -24,70 +24,101 @@
    <children>
       <Pane prefHeight="600.0" prefWidth="1024.0" GridPane.columnIndex="1">
          <children>
-            <Pane fx:id="sidebarContent" layoutX="-10.0" layoutY="70.0" prefHeight="530.0" prefWidth="268.0" style="-fx-border-color: F0F0F0;">
+            <Pane fx:id="loginPane" layoutX="369.0" layoutY="129.0" prefHeight="342.0" prefWidth="286.0" style="-fx-border-color: black;">
                <children>
-                  <Text layoutX="25.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Members:" wrappingWidth="113.17822265625">
+                  <Text layoutX="71.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DLSUsap">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="36.0" />
                      </font>
                   </Text>
-               </children></Pane>
-            <Pane fx:id="sidebarHeader" layoutX="-10.0" prefHeight="70.0" prefWidth="268.0" style="-fx-border-color: F0F0F0;">
-               <children>
-                  <Text layoutX="25.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text" text="Not Slack" wrappingWidth="113.17822265625">
-                     <font>
-                        <Font size="16.0" />
-                     </font></Text>
-               </children></Pane>
-            <Pane fx:id="bodyHeader" layoutX="256.0" prefHeight="70.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
-               <children>
-                  <Text fx:id="bodyHeaderContent" layoutX="30.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="server-name" wrappingWidth="113.17822265625">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-               </children></Pane>
-            <Pane fx:id="bodyContent" layoutX="256.0" layoutY="70.0" prefHeight="530.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
-               <children>
-                  <Pane layoutX="47.0" layoutY="430.0" prefHeight="80.0" prefWidth="675.0" style="-fx-border-color: black; -fx-border-radius: 5px; -fx-background-color: F8F8F8;">
+                  <Group layoutY="4.0">
                      <children>
-                        <TextField fx:id="textField" layoutX="2.0" layoutY="2.0" onAction="#onEnter" prefHeight="40.0" prefWidth="670.0" promptText="Message server-nam" style="-fx-background-color: white; -fx-border: white;">
+                        <Button layoutX="116.0" layoutY="242.0" mnemonicParsing="false" onAction="#login" text="Login" />
+                        <TextField fx:id="usernameField" layoutX="34.0" layoutY="187.0" prefHeight="27.0" prefWidth="218.0" promptText="Username" />
+                        <Text layoutX="33.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
+                        <TextField fx:id="ipField" layoutX="33.0" layoutY="117.0" prefHeight="27.0" prefWidth="144.0" promptText="Server IP" />
+                        <TextField fx:id="portField" layoutX="183.0" layoutY="117.0" prefHeight="27.0" prefWidth="70.0" promptText="Port" />
+                        <Text layoutX="33.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server" />
+                     </children>
+                  </Group>
+               </children>
+            </Pane>
+            <Group fx:id="postLogin">
+               <children>
+                  <Pane fx:id="bodyHeader" layoutX="256.0" prefHeight="70.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
+                     <children>
+                        <Button layoutX="668.0" layoutY="22.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Log Out" />
+                        <Text fx:id="usernameDisplay" layoutX="23.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="sidebarHeader" layoutX="-10.0" prefHeight="70.0" prefWidth="268.0" style="-fx-border-color: F0F0F0;">
+                     <children>
+                        <Text layoutX="25.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text" text="DLSUsap" wrappingWidth="113.17822265625">
                            <font>
                               <Font size="16.0" />
                            </font>
-                        </TextField>
-                        <AnchorPane focusTraversable="true" layoutX="601.0" layoutY="47.0" styleClass="border-focus">
-                           <children>
-                              <ImageView fitHeight="150.0" fitWidth="27.0" onMouseClicked="#readFile" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@assets/attach.png" />
-                                 </image>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </ImageView>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane focusTraversable="true" layoutX="640.0" layoutY="47.0" onMouseClicked="#sendMessage" styleClass="border-focus">
-                           <children>
-                              <ImageView fitHeight="27.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@assets/sent.png" />
-                                 </image>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </ImageView>
-                           </children>
-                        </AnchorPane>
+                        </Text>
                      </children>
                   </Pane>
-                  <ScrollPane fx:id="scrollPane" layoutX="45.0" prefHeight="429.0" prefViewportHeight="410.0" prefViewportWidth="675.0" prefWidth="675.0" style="-fx-background-color: white; -fx-border: 0px;">
-                     <content>
-                        <TextFlow fx:id="textFlow" layoutX="45.0" layoutY="20.0" prefHeight="428.0" prefWidth="675.0" style="-fx-background-color: white; -fx-font-size: 16;" />
-                     </content>
-                  </ScrollPane>
-               </children></Pane>
+                  <Pane fx:id="bodyContent" layoutX="256.0" layoutY="70.0" prefHeight="530.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
+                     <children>
+                        <Pane layoutX="47.0" layoutY="430.0" prefHeight="80.0" prefWidth="675.0" style="-fx-border-color: black; -fx-border-radius: 5px; -fx-background-color: F8F8F8;">
+                           <children>
+                              <TextField fx:id="textField" layoutX="2.0" layoutY="2.0" onAction="#onEnter" prefHeight="40.0" prefWidth="670.0" promptText="Message server-nam" style="-fx-background-color: white; -fx-border: white;">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <AnchorPane focusTraversable="true" layoutX="601.0" layoutY="47.0" styleClass="border-focus">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="27.0" onMouseClicked="#readFile" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/attach.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane focusTraversable="true" layoutX="640.0" layoutY="47.0" onMouseClicked="#sendMessage" styleClass="border-focus">
+                                 <children>
+                                    <ImageView fitHeight="27.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/sent.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </Pane>
+                        <ScrollPane fx:id="scrollPane" layoutX="45.0" layoutY="10.0" prefHeight="414.0" prefViewportHeight="410.0" prefViewportWidth="675.0" prefWidth="675.0" style="-fx-background-color: transparent; -fx-border: 0px;" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="sidebarContent" layoutX="-10.0" layoutY="70.0" prefHeight="530.0" prefWidth="268.0" style="-fx-border-color: F0F0F0;">
+                     <children>
+                        <Group layoutX="3.0" layoutY="48.0">
+                           <children>
+                              <VBox fx:id="directMessages" layoutX="13.0" layoutY="55.0" prefHeight="200.0" prefWidth="237.0" />
+                              <Text layoutX="25.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Direct messages" wrappingWidth="113.17822265625">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Group>
+                        <Text fx:id="bodyHeaderContent" layoutX="28.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="server-name" wrappingWidth="170.17822265625">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+               </children>
+            </Group>
          </children></Pane>
    </children>
     <stylesheets>

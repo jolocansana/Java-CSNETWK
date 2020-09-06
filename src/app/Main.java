@@ -30,7 +30,7 @@ public class Main extends Application {
 //        Stage serverStage = new Stage();
 //        Parent root = FXMLLoader.load(getClass().getResource("ServerUI.fxml"));
 //        serverStage.setTitle("Server");
-//        serverStage.setScene(new Scene(root, 300, 275));
+//        serverStage.setScene(new Scene(root, 1024, 600));
 //        serverStage.setResizable(false);
 //        serverStage.show();
     }

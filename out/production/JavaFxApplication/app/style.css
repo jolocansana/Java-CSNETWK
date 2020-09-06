@@ -65,3 +65,7 @@ GridPane {
     -fx-background-insets : 2.0, 0.0, 0.0;
     -fx-background-radius : 2.0em;
 }
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
