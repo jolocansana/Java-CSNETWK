@@ -29,18 +29,6 @@ public class ServerControl implements Initializable {
     private Group preSidebar;
 
     @FXML
-    private TextField serverNameField;
-
-    @FXML
-    private Text serverNameDisplay;
-
-    @FXML
-    private TextArea serverDescriptionField;
-
-    @FXML
-    private Text serverDescDisplay;
-
-    @FXML
     private TextField serverPortField;
 
     @FXML
@@ -52,8 +40,6 @@ public class ServerControl implements Initializable {
     @FXML
     private Group postBody;
 
-    private String serverName;
-    private String serverDesc;
     private String serverPort;
 
     private messageStruct[] log;
@@ -61,29 +47,11 @@ public class ServerControl implements Initializable {
     // TODO: From user input, start server on port x
     public void startServer() {
         // Get name, and description fields and assign to variables
-        serverName = serverNameField.getText();
-        serverDesc = serverDescriptionField.getText();
         serverPort = serverPortField.getText();
 
         // TODO: Start server on port x (Check if valid port number)
 
         // Setup body view
-        serverNameDisplay.setText("#" + serverName);
-        serverDescDisplay.setText(serverDesc);
-
-        Text serverNameText = new Text("#" + serverName + "\n");
-        serverNameText.setStyle("-fx-font-family: \"Lato Bold\", sans-serif; -fx-font-size: 28;");
-
-        Text spacing = new Text("\n");
-        spacing.setStyle("-fx-font-size: 10;");
-
-        Text serverDescription = new Text(serverDesc + "\n\n");
-        serverDescription.setStyle("-fx-font-size: 18;");
-
-        Line divider = new Line(0, 0, 600, 0);
-        divider.setStyle("-fx-stroke: grey;");
-
-        textFlow.getChildren().addAll(serverNameText, spacing, serverDescription, divider, new Text("\n\n"));
 
         // textFlow.setLineSpacing(20.0f);
         scrollPane.setFitToWidth(true);
@@ -97,34 +65,13 @@ public class ServerControl implements Initializable {
         postBody.setVisible(true);
     }
 
-    // Accept incoming requests (messages, files)
-    public void acceptRequests() {
-        // TODO: Listen to incoming requests from connected clients
+    // listens for incoming connections, accepts them, and creates a thread for them.
+    private void listenConnections() {
+        while(true){
+            // TODO: Listen to incoming requests and accepts() them
 
-        // TODO: Append messageStruct object to log array
-
-        // TODO: Update log string and display on server display
-        // LOG FORMAT: timestamp source -> dest: msg/filename
-
-        // TODO: Send user input to the destination user
-    }
-
-    // Listens and accepts incoming connection request
-    public void acceptConnections() {
-        // TODO: Get username of incoming connection, accept connection if username is not taken
-
-        // TODO: Log new connection to log
-
-        // TODO: Transmit to all clients connected about new connect client
-    }
-
-    // Listens and accepts incoming disconnect request
-    public void acceptDisconnect() {
-        // TODO: Get username of incoming disconnection
-
-        // TODO: Log disconnection to log
-
-        // TODO: Transmit to all clients connected about disconnected client
+            // TODO: Create Thread, starts thread, puts thread in Dict for easy access with username as key and Thread as value
+        }
     }
 
     public void saveLog() {

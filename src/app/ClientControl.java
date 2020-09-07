@@ -51,22 +51,16 @@ public class ClientControl implements Initializable {
     private ScrollPane scrollPane; // Wrapper container for textFlow to allow scrolling
 
     @FXML
-    private Text bodyHeaderContent;
+    private TextFlow textFlow;
 
     @FXML
     private Text usernameDisplay;
 
-    @FXML
-    private VBox directMessages;
-
-    private Hashtable<String, TextFlow> textFlowDict;
-    private TextFlow activeTextFlow;
     private String username;
-    private String serverName;
-    private String serverDesc;
     private String serverIP;
     private String serverPort;
-    private boolean isAlone = true;
+
+    // TODO: Make Stream variables
 
     // Connect user to server, and assign text fields to variables
     public void login() {
@@ -78,28 +72,7 @@ public class ClientControl implements Initializable {
         serverPort = portField.getText();
         System.out.println(String.format("%s:%s", serverIP, serverPort));
 
-        // TODO: Get data from server (serverName, serverDesc, msgs)
-        serverName = "notion-test"; // TEMP VALUES
-        serverDesc = "This is the very beginning of the #notion-test channel."; // TEMP VALUES
-
         // Setup view, purely styling and assignment
-        bodyHeaderContent.setText("# " + serverName);
-        textField.setPromptText("Message #" + serverName);
-
-        Text serverNameText = new Text("\n\n#" + serverName + "\n");
-        serverNameText.setStyle("-fx-font-family: \"Lato Bold\", sans-serif; -fx-font-size: 28;");
-
-        Text spacing = new Text("\n");
-        spacing.setStyle("-fx-font-size: 10;");
-
-        Text serverDescription = new Text(serverDesc + "\n\n");
-        serverDescription.setStyle("-fx-font-size: 18;");
-
-        Line divider = new Line(0, 0, 600, 0);
-        divider.setStyle("-fx-stroke: grey;");
-
-        activeTextFlow.getChildren().addAll(serverNameText, spacing, serverDescription, divider, new Text("\n\n"));
-
         scrollPane.setFitToWidth(true);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
@@ -126,8 +99,8 @@ public class ClientControl implements Initializable {
 
             // Fixing style and adding to textFlow
             msg.setStyle("-fx-font-size: 16px;");
-            activeTextFlow.getChildren().addAll(time, user, msg);
-            scrollPane.vvalueProperty().bind(activeTextFlow.heightProperty());
+            textFlow.getChildren().addAll(time, user, msg);
+            scrollPane.vvalueProperty().bind(textFlow.heightProperty());
             textField.setText("");
 
             // TODO: Send msg to server with timestamp, source username, dest username, and msg string (Use messageStruct to construct message)
@@ -142,36 +115,22 @@ public class ClientControl implements Initializable {
         // TODO: Send file to server with timestamp, source username, dest username, and file object (Use messageStruct to construct message)
     }
 
+    // Listens to server for any broadcast on update(new, leave) members or new message/file via DataInputStream
+    public void listenServer() {
+        // Types 'member' for member updates and 'message' for text/file messages
+        // TODO: If type is member
+            // TODO: If new member is connected: activate textField (If new user, clear textFlow first)
+
+            // TODO: If member is disconnected: deactivate textField
+        // TODO: If type is message
+            // TODO: Update textFlow of dest using format timestamp source message/file
+    }
+
     // Logs current user out
     public void logOut() {
         // TODO: On log out, disconnect from server (call disconnectServer function) and go back to login screen
 
         // TODO: Disconnect from server session
-    }
-
-    // Listens to server for any broadcast on update(new, leave) members or new message/file
-    public void listenServer() {
-        // Types 'member' for member updates and 'message' for text/file messages
-        // TODO: If type is member
-            // TODO: If new member is connected: add new button, text flow for the user (1)
-
-            // TODO: If member is disconnected: gray out member name and make non-clickable
-        // TODO: If type is message
-            // TODO: Update textFlow of dest using format timestamp source message/file
-    }
-
-    @FXML
-    // Change chat display on username click
-    public void changeCurrentChat(MouseEvent e, String username){
-
-        // Change usernameDisplay to e.source's username
-        usernameDisplay.setText(username);
-
-        // Change text display to username
-        scrollPane.setContent((Node) textFlowDict.get(username));
-        activeTextFlow = (TextFlow) textFlowDict.get(username);
-
-        textField.setPromptText("Message " + username);
     }
 
     @FXML
@@ -182,48 +141,5 @@ public class ClientControl implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO: MOVE TO LOGIN AFTER FULL IMPLEMENTATION
-        directMessages.setSpacing(10);
-
-        // TODO: MOVE ALL BOTTOM TO (1)
-        // Adds button for user
-        username = "testUser";
-        Button button1 = new Button("johndoe");
-        button1.setMaxWidth(1000);
-        button1.setStyle("-fx-border: 0; -fx-background-color: white; -fx-alignment: top-left;");
-        button1.setOnMouseEntered(e -> button1.setStyle("-fx-border: 0; -fx-background-color: grey; -fx-alignment: top-left;"));
-        button1.setOnMouseExited(e -> button1.setStyle("-fx-border: 0; -fx-background-color: white; -fx-alignment: top-left;"));
-        button1.setOnMousePressed(e -> button1.setStyle("-fx-border: 0; -fx-background-color: orange; -fx-alignment: top-left;"));
-        button1.setOnMouseReleased(e -> button1.setStyle("-fx-border: 0; -fx-background-color: grey; -fx-alignment: top-left;"));
-        button1.setOnMouseClicked(e -> changeCurrentChat(e, ((Button) (e.getSource())).getText()));
-
-        Button button2 = new Button("jilldoe");
-        button2.setMaxWidth(1000);
-        button2.setStyle("-fx-border: 0; -fx-background-color: white; -fx-alignment: top-left;");
-        button2.setOnMouseEntered(e -> button2.setStyle("-fx-border: 0; -fx-background-color: grey; -fx-alignment: top-left;"));
-        button2.setOnMouseExited(e -> button2.setStyle("-fx-border: 0; -fx-background-color: white; -fx-alignment: top-left;"));
-        button2.setOnMousePressed(e -> button2.setStyle("-fx-border: 0; -fx-background-color: orange; -fx-alignment: top-left;"));
-        button2.setOnMouseReleased(e -> button2.setStyle("-fx-border: 0; -fx-background-color: grey; -fx-alignment: top-left;"));
-        button2.setOnMouseClicked(e -> changeCurrentChat(e, ((Button) (e.getSource())).getText()));
-
-        directMessages.getChildren().addAll(button1, button2);
-
-        // Add test text flow
-        scrollPane.setFitToWidth(true);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setStyle("-fx-background-color: white;");
-        scrollPane.setVvalue(1.0);
-
-        textFlowDict = new Hashtable<String, TextFlow>();
-
-        TextFlow testTextFlow = new TextFlow();
-        String key = "johndoe";
-        testTextFlow.setPrefWidth(650);
-        textFlowDict.put(key, testTextFlow);
-
-        TextFlow testTextFlow2 = new TextFlow();
-        String key2 = "jilldoe";
-        testTextFlow2.setPrefWidth(650);
-        textFlowDict.put(key2, testTextFlow2);
     }
 }

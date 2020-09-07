@@ -13,7 +13,7 @@
 <?import javafx.scene.control.Label?>
 <?import java.net.URL?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ClientControl">
+<GridPane alignment="center" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ClientControl">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -22,9 +22,9 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Pane prefHeight="600.0" prefWidth="1024.0" GridPane.columnIndex="1">
+      <Pane prefHeight="600.0" prefWidth="768.0" GridPane.columnIndex="1">
          <children>
-            <Pane fx:id="loginPane" layoutX="369.0" layoutY="129.0" prefHeight="342.0" prefWidth="286.0" style="-fx-border-color: black;">
+            <Pane fx:id="loginPane" layoutX="241.0" layoutY="129.0" prefHeight="342.0" prefWidth="286.0" style="-fx-border-color: black;">
                <children>
                   <Text layoutX="71.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DLSUsap">
                      <font>
@@ -36,31 +36,27 @@
                         <Button layoutX="116.0" layoutY="242.0" mnemonicParsing="false" onAction="#login" text="Login" />
                         <TextField fx:id="usernameField" layoutX="34.0" layoutY="187.0" prefHeight="27.0" prefWidth="218.0" promptText="Username" />
                         <Text layoutX="33.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
-                        <TextField fx:id="ipField" layoutX="33.0" layoutY="117.0" prefHeight="27.0" prefWidth="144.0" promptText="Server IP" />
+                        <TextField fx:id="ipField" layoutX="33.0" layoutY="117.0" prefHeight="27.0" prefWidth="144.0" promptText="Server IP" text="localhost" />
                         <TextField fx:id="portField" layoutX="183.0" layoutY="117.0" prefHeight="27.0" prefWidth="70.0" promptText="Port" />
                         <Text layoutX="33.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server" />
                      </children>
                   </Group>
                </children>
             </Pane>
-            <Group fx:id="postLogin">
+            <Group fx:id="postLogin" visible="false">
                <children>
-                  <Pane fx:id="bodyHeader" layoutX="256.0" prefHeight="70.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
+                  <Pane fx:id="bodyHeader" prefHeight="70.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
                      <children>
                         <Button layoutX="668.0" layoutY="22.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Log Out" />
-                        <Text fx:id="usernameDisplay" layoutX="23.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                     </children>
-                  </Pane>
-                  <Pane fx:id="sidebarHeader" layoutX="-10.0" prefHeight="70.0" prefWidth="268.0" style="-fx-border-color: F0F0F0;">
-                     <children>
-                        <Text layoutX="25.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text" text="DLSUsap" wrappingWidth="113.17822265625">
+                        <Text fx:id="usernameDisplay" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting for other user" textAlignment="CENTER" wrappingWidth="768.0" />
+                        <Text layoutX="25.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text" text="DLSUsap" wrappingWidth="113.17822265625">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Text>
                      </children>
                   </Pane>
-                  <Pane fx:id="bodyContent" layoutX="256.0" layoutY="70.0" prefHeight="530.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
+                  <Pane fx:id="bodyContent" layoutY="70.0" prefHeight="530.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
                      <children>
                         <Pane layoutX="47.0" layoutY="430.0" prefHeight="80.0" prefWidth="675.0" style="-fx-border-color: black; -fx-border-radius: 5px; -fx-background-color: F8F8F8;">
                            <children>
@@ -95,26 +91,10 @@
                               </AnchorPane>
                            </children>
                         </Pane>
-                        <ScrollPane fx:id="scrollPane" layoutX="45.0" layoutY="10.0" prefHeight="414.0" prefViewportHeight="410.0" prefViewportWidth="675.0" prefWidth="675.0" style="-fx-background-color: transparent; -fx-border: 0px;" />
-                     </children>
-                  </Pane>
-                  <Pane fx:id="sidebarContent" layoutX="-10.0" layoutY="70.0" prefHeight="530.0" prefWidth="268.0" style="-fx-border-color: F0F0F0;">
-                     <children>
-                        <Group layoutX="3.0" layoutY="48.0">
-                           <children>
-                              <VBox fx:id="directMessages" layoutX="13.0" layoutY="55.0" prefHeight="200.0" prefWidth="237.0" />
-                              <Text layoutX="25.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Direct messages" wrappingWidth="113.17822265625">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </Group>
-                        <Text fx:id="bodyHeaderContent" layoutX="28.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="server-name" wrappingWidth="170.17822265625">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Text>
+                        <ScrollPane fx:id="scrollPane" layoutX="45.0" layoutY="10.0" prefHeight="414.0" prefViewportHeight="410.0" prefViewportWidth="675.0" prefWidth="675.0" style="-fx-background-color: transparent; -fx-border: 0px;">
+                           <content>
+                              <TextFlow fx:id="textFlow" prefHeight="411.0" prefWidth="657.0" />
+                           </content></ScrollPane>
                      </children>
                   </Pane>
                </children>

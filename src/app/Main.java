@@ -22,17 +22,17 @@ public class Main extends Application {
         // Client start
         Parent client = FXMLLoader.load(getClass().getResource("ClientUI.fxml"));
         primaryStage.setTitle("Client");
-        primaryStage.setScene(new Scene(client, 1024, 600));
+        primaryStage.setScene(new Scene(client, 768, 600));
         primaryStage.setResizable(false);
         primaryStage.show();
 
         // Server start
-//        Stage serverStage = new Stage();
-//        Parent root = FXMLLoader.load(getClass().getResource("ServerUI.fxml"));
-//        serverStage.setTitle("Server");
-//        serverStage.setScene(new Scene(root, 1024, 600));
-//        serverStage.setResizable(false);
-//        serverStage.show();
+        Stage serverStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("ServerUI.fxml"));
+        serverStage.setTitle("Server");
+        serverStage.setScene(new Scene(root, 1024, 600));
+        serverStage.setResizable(false);
+        serverStage.show();
     }
 
 

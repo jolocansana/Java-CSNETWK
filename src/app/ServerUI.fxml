@@ -33,45 +33,23 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <Text fx:id="serverNameDisplay" layoutX="25.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text" text="Server Name">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="25.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Members:" wrappingWidth="113.17822265625">
+                        <Text layoutX="20.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Members:" wrappingWidth="113.17822265625">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <Text fx:id="serverDescDisplay" layoutX="25.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server description">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
-                        <TextArea fx:id="activeMembers" editable="false" layoutX="23.0" layoutY="265.0" prefHeight="200.0" prefWidth="206.0" />
+                        <TextArea fx:id="activeMembers" editable="false" layoutX="20.0" layoutY="60.0" prefHeight="200.0" prefWidth="206.0" />
                      </children>
                   </Group>
                   <Group fx:id="preSidebar">
                      <children>
-                        <TextField fx:id="serverPortField" layoutX="23.0" layoutY="266.0" />
-                        <TextField fx:id="serverNameField" layoutX="23.0" layoutY="50.0" />
-                        <Button layoutX="23.0" layoutY="318.0" mnemonicParsing="false" onAction="#startServer" text="Create Server" />
-                        <Text fx:id="bodyHeaderContent2" layoutX="23.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Name" wrappingWidth="181.17822265625">
+                        <Text fx:id="bodyHeaderContent22" layoutX="23.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Port" wrappingWidth="181.17822265625">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <Text fx:id="bodyHeaderContent21" layoutX="23.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Description" wrappingWidth="181.17822265625">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Text>
-                        <TextArea fx:id="serverDescriptionField" layoutX="23.0" layoutY="127.0" prefHeight="92.0" prefWidth="200.0" />
-                        <Text fx:id="bodyHeaderContent22" layoutX="23.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Port" wrappingWidth="181.17822265625">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Text>
+                        <Button layoutX="23.0" layoutY="111.0" mnemonicParsing="false" onAction="#startServer" text="Create Server" />
+                        <TextField fx:id="serverPortField" layoutX="23.0" layoutY="59.0" />
                      </children>
                   </Group>
                </children></Pane>
