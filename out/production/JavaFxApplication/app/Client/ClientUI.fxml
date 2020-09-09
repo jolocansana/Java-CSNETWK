@@ -13,7 +13,7 @@
 <?import javafx.scene.control.Label?>
 <?import java.net.URL?>
 
-<GridPane alignment="center" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ClientControl">
+<GridPane alignment="center" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Client.ClientControl">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -47,7 +47,7 @@
                <children>
                   <Pane fx:id="bodyHeader" prefHeight="70.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
                      <children>
-                        <Button layoutX="668.0" layoutY="22.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Log Out" />
+                        <Button layoutX="668.0" layoutY="22.0" mnemonicParsing="false" onAction="#logOut" prefHeight="27.0" prefWidth="70.0" text="Log Out" />
                         <Text fx:id="usernameDisplay" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting for other user" textAlignment="CENTER" wrappingWidth="768.0" />
                         <Text layoutX="25.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text" text="DLSUsap" wrappingWidth="113.17822265625">
                            <font>
@@ -58,7 +58,7 @@
                   </Pane>
                   <Pane fx:id="bodyContent" layoutY="70.0" prefHeight="530.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
                      <children>
-                        <Pane layoutX="47.0" layoutY="430.0" prefHeight="80.0" prefWidth="675.0" style="-fx-border-color: black; -fx-border-radius: 5px; -fx-background-color: F8F8F8;">
+                        <Pane fx:id="inputField" layoutX="47.0" layoutY="430.0" prefHeight="80.0" prefWidth="675.0" style="-fx-border-color: black; -fx-border-radius: 5px; -fx-background-color: F8F8F8;" visible="false">
                            <children>
                               <TextField fx:id="textField" layoutX="2.0" layoutY="2.0" onAction="#onEnter" prefHeight="40.0" prefWidth="670.0" promptText="Message server-nam" style="-fx-background-color: white; -fx-border: white;">
                                  <font>
@@ -69,7 +69,7 @@
                                  <children>
                                     <ImageView fitHeight="150.0" fitWidth="27.0" onMouseClicked="#readFile" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@assets/attach.png" />
+                                          <Image url="@../assets/attach.png" />
                                        </image>
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
@@ -81,7 +81,7 @@
                                  <children>
                                     <ImageView fitHeight="27.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@assets/sent.png" />
+                                          <Image url="@../assets/sent.png" />
                                        </image>
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
@@ -102,6 +102,6 @@
          </children></Pane>
    </children>
     <stylesheets>
-        <URL value="@style.css" />
+        <URL value="@../style.css" />
     </stylesheets>
 </GridPane>
