@@ -52,6 +52,7 @@
                         <TextField fx:id="serverPortField" layoutX="23.0" layoutY="59.0" />
                      </children>
                   </Group>
+                  <Text fx:id="errorText" fill="RED" layoutX="31.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error Text" visible="false" wrappingWidth="206.0" />
                </children></Pane>
             <Pane fx:id="sidebarHeader" layoutX="-10.0" prefHeight="70.0" prefWidth="268.0" style="-fx-border-color: F0F0F0;">
                <children>

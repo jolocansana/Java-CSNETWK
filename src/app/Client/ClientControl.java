@@ -1,36 +1,27 @@
 package app.Client;
 
+import app.model.fileStruct;
 import app.model.messageStruct;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
 import javafx.scene.text.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
-import javax.annotation.Resources;
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
-import java.sql.Time;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ClientControl implements Initializable {
     // Variables for FXML elements
@@ -64,6 +55,9 @@ public class ClientControl implements Initializable {
     @FXML
     private Text usernameDisplay;
 
+    @FXML
+    private Text errorText;
+
     private String username;
     private String destUsername;
     private String serverIP;
@@ -88,37 +82,37 @@ public class ClientControl implements Initializable {
 
         // TODO: Connect to server
         try {
-            System.out.println("Inside");
             clientEndpoint = new Socket(serverIP, Integer.parseInt(serverPort));
-            System.out.println(clientEndpoint.toString());
             writer = new ObjectOutputStream(clientEndpoint.getOutputStream());
-            System.out.println("Inside");
             reader = new ObjectInputStream(clientEndpoint.getInputStream());
-            System.out.println("Inside");
 
             Date timeNow = new Date();
             writer.writeObject(new messageStruct("connect", timeNow, username, null, null, null));
+
+            // Setup view, purely styling and assignment
+            scrollPane.setFitToWidth(true);
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+            // Change view
+            loginPane.setVisible(false);
+            postLogin.setVisible(true);
+
+            new Thread(() -> {
+                try {
+                    listenServer();
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+
+            System.out.println("Connection done");
+            errorText.setVisible(false);
+
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            System.out.println("Operation done");
+            errorText.setText("Server IP or Port is invalid!");
+            errorText.setVisible(true);
         }
-
-        // Setup view, purely styling and assignment
-        scrollPane.setFitToWidth(true);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
-        // Change view
-        loginPane.setVisible(false);
-        postLogin.setVisible(true);
-
-        new Thread(() -> {
-            try {
-                listenServer();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 
     // Sends message to server (text, and/or file)
@@ -150,11 +144,35 @@ public class ClientControl implements Initializable {
     }
 
     // Access local filesystem, reads file, and prepares file for transport
-    public void readFile() {
+    public void readFile() throws IOException {
         // TODO: Open file directory, when Ok, send file to server
-        System.out.println("Reading File");
+        FileChooser fc = new FileChooser();
+        Stage fcStage = new Stage();
+        File f = fc.showOpenDialog(fcStage);
+
+        // Append to textFlow
+
+        Date timeNow = new Date();
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        Text time = new Text(timeFormat.format(timeNow) + "   ");
+        time.setStyle("-fx-color: grey");
+
+        // Make text object for username
+        Text user = new Text(username + "   ");
+        user.setStyle("-fx-font-family: \"Lato Bold\", sans-serif;");
+
+        // Make text object textField.getText()
+        String message = "sent file " + f.getName();
+        Text msg = new Text(message + "\n\n");
+
+        // Fixing style and adding to textFlow
+        msg.setStyle("-fx-font-size: 16px;");
+        textFlow.getChildren().addAll(time, user, msg);
+        scrollPane.vvalueProperty().bind(textFlow.heightProperty());
+        textField.setText("");
 
         // TODO: Send file to server with timestamp, source username, dest username, and file object (Use messageStruct to construct message)
+        writer.writeObject(new messageStruct("file", timeNow, username, destUsername, message, new fileStruct(f.getName(), Files.readAllBytes(f.toPath()))));
     }
 
     // Listens to server for any broadcast on update(new, leave) members or new message/file via DataInputStream
@@ -186,7 +204,15 @@ public class ClientControl implements Initializable {
                     textField.setPromptText("Message " + destUsername);
                 });
 
-            } else
+            }
+            else if(obj.type.equals("invalid"))
+            {
+                postLogin.setVisible(false);
+                loginPane.setVisible(true);
+                errorText.setText(obj.textMessage);
+                errorText.setVisible(true);
+            }
+            else
             {
                 timeNow = obj.timestamp;
                 timeFormat = new SimpleDateFormat("HH:mm");
@@ -203,7 +229,20 @@ public class ClientControl implements Initializable {
                         msg = new Text(obj.textMessage + "\n\n");
                         break;
                     case "file":
-                        msg = new Text("has sent a file.\n\n");
+                        msg = new Text(obj.textMessage + "\n\n");
+                        FileChooser fc = new FileChooser();
+                        messageStruct finalObj = obj;
+                        Platform.runLater(()->{
+                            Stage fcStage = new Stage();
+                            fc.setInitialFileName(finalObj.file.name);
+                            File f = fc.showSaveDialog(fcStage);
+                            Path path = Paths.get(f.getPath());
+                            try {
+                                Files.write(path, finalObj.file.data);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
                         break;
                     case "connect":
                         msg = new Text("has connected to the server!\n\n");

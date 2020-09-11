@@ -5,16 +5,20 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -45,43 +49,54 @@ public class ServerControl implements Initializable {
     @FXML
     private Group postBody;
 
+    @FXML
+    private Text errorText;
+
     private int serverPort;
 
     private messageStruct[] log;
 
-    Map<String, ServerThread> connectionThreads;
+    public Map<String, ServerThread> connectionThreads;
 
     private ServerSocket serverSocket;
 
     // TODO: From user input, start server on port x
     public void startServer() throws IOException {
-        // Get name, and description fields and assign to variables
-        serverPort = Integer.parseInt(serverPortField.getText());
+        try {
+            // Get name, and description fields and assign to variables
+            serverPort = Integer.parseInt(serverPortField.getText());
 
-        // TODO: Start server on port x (Check if valid port number)
-        serverSocket = new ServerSocket(serverPort);
-        connectionThreads = new HashMap<>();
+            // TODO: Start server on port x (Check if valid port number)
+            serverSocket = new ServerSocket(serverPort);
+            connectionThreads = new HashMap<>();
 
-        // Setup body view
+            // Setup body view
 
-        // textFlow.setLineSpacing(20.0f);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            // textFlow.setLineSpacing(20.0f);
+            scrollPane.setFitToWidth(true);
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        portDisplay.setText("Listening on port " + serverPort);
+            portDisplay.setText("Listening on port " + serverPort);
 
-        // Change pre to postSidebar
-        preSidebar.setVisible(false);
-        postSidebar.setVisible(true);
-        postBody.setVisible(true);
+            // Change pre to postSidebar
+            preSidebar.setVisible(false);
+            postSidebar.setVisible(true);
+            postBody.setVisible(true);
 
-        new Thread(() -> {
-            try {
-                listenConnections();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+            new Thread(() -> {
+                try {
+                    listenConnections();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+
+            errorText.setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorText.setText("Port given is either invalid or taken!");
+            errorText.setVisible(true);
+        }
     }
 
     // Listens for incoming connections
@@ -145,13 +160,11 @@ public class ServerControl implements Initializable {
                     };
                 }
                 break;
-            case "text":
+            case "text": case "file":
                 connectionThreads.get(msg.destination).dosWriter.writeObject(msg);
                 Platform.runLater(()->{
                     appendTextFlow(String.format("[%s]    \"%s\" >>> \"%s\":    %s", msg.timestamp.toString(), msg.source, msg.destination, msg.textMessage));
                 });
-                break;
-            case "file":
                 break;
             case "disconnect":
                 Platform.runLater(()->{
@@ -177,9 +190,21 @@ public class ServerControl implements Initializable {
         }
     }
 
-    public void saveLog() {
+    public void saveLog() throws IOException {
         // TODO: Save log array to a text file
-        System.out.println("Log saved!");
+        String outputString = "";
+        for (Node line : textFlow.getChildren()){
+            String l = ((Text) line).getText();
+            outputString += l.substring(0, l.length() - 1);
+        }
+        Date timeNow = new Date();
+        FileWriter output = new FileWriter("src/app/logs/" + timeNow + ".txt");
+        output.write(outputString);
+        output.close();
+
+        Platform.runLater(()->{
+            appendTextFlow(String.format("[%s]    %s", timeNow.toString(), "LOG HAS BEEN SAVED IN LOGS FOLDER!"));
+        });
     }
 
     @Override

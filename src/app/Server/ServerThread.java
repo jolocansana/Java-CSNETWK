@@ -5,6 +5,7 @@ import javafx.scene.text.Text;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Map;
 
 public class ServerThread extends Thread {
 
@@ -30,12 +31,26 @@ public class ServerThread extends Thread {
             while(true){
                 messageStruct incomingMsg = ((messageStruct) disReader.readObject());
                 if(incomingMsg.type.equals("connect")) {
-                    threadID = incomingMsg.source;
-                    source.addThreadToMap(incomingMsg.source, this);
+                    boolean flag = false;
+                    for(Map.Entry<String, ServerThread> thread : source.connectionThreads.entrySet()) {
+                        flag = thread.getKey().equals(incomingMsg.source);
+                        if (flag) break;
+                    };
+
+                    if(flag) {
+                        dosWriter.writeObject(new messageStruct("invalid", null, null, null, "Username is taken!", null));
+                        this.stop();
+                    } else {
+                        threadID = incomingMsg.source;
+                        source.addThreadToMap(incomingMsg.source, this);
+                        source.routeMessage(incomingMsg);
+                    }
                 }
-                source.routeMessage(incomingMsg);
-                if(incomingMsg.type.equals("disconnect")) {
+                else if(incomingMsg.type.equals("disconnect")) {
+                    source.routeMessage(incomingMsg);
                     this.stop();
+                } else {
+                    source.routeMessage(incomingMsg);
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

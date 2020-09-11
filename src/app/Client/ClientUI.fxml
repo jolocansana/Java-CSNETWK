@@ -41,6 +41,7 @@
                         <Text layoutX="33.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server" />
                      </children>
                   </Group>
+                  <Text fx:id="errorText" fill="RED" layoutX="3.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error Text" textAlignment="CENTER" visible="false" wrappingWidth="279.21630859375" />
                </children>
             </Pane>
             <Group fx:id="postLogin" visible="false">
@@ -48,7 +49,7 @@
                   <Pane fx:id="bodyHeader" prefHeight="70.0" prefWidth="768.0" style="-fx-border-color: F0F0F0;">
                      <children>
                         <Button layoutX="668.0" layoutY="22.0" mnemonicParsing="false" onAction="#logOut" prefHeight="27.0" prefWidth="70.0" text="Log Out" />
-                        <Text fx:id="usernameDisplay" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting for other user" textAlignment="CENTER" wrappingWidth="768.0" />
+                        <Text fx:id="usernameDisplay" layoutX="101.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting for other user" textAlignment="CENTER" wrappingWidth="567.0" />
                         <Text layoutX="25.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text" text="DLSUsap" wrappingWidth="113.17822265625">
                            <font>
                               <Font size="16.0" />
