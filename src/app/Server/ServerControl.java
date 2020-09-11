@@ -47,6 +47,9 @@ public class ServerControl implements Initializable {
     private Text portDisplay;
 
     @FXML
+    private Text ipDisplay;
+
+    @FXML
     private Group postBody;
 
     @FXML
@@ -76,6 +79,9 @@ public class ServerControl implements Initializable {
             scrollPane.setFitToWidth(true);
             scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
+            String serverIP = serverSocket.getInetAddress().getHostAddress();
+
+            ipDisplay.setText("IP: " + serverIP);
             portDisplay.setText("Listening on port " + serverPort);
 
             // Change pre to postSidebar

@@ -39,6 +39,11 @@
                            </font>
                         </Text>
                         <TextArea fx:id="activeMembers" editable="false" layoutX="20.0" layoutY="60.0" prefHeight="200.0" prefWidth="206.0" />
+                        <Text fx:id="ipDisplay" fill="#797676" layoutX="25.0" layoutY="477.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP: " wrappingWidth="195.17822265625">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
                      </children>
                   </Group>
                   <Group fx:id="preSidebar">
