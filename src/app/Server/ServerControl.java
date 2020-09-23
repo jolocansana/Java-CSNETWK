@@ -11,13 +11,19 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +69,10 @@ public class ServerControl implements Initializable {
 
     private ServerSocket serverSocket;
 
-    // TODO: From user input, start server on port x
+    /**
+     * Starts the server instance on serverPort
+     * @throws IOException
+     */
     public void startServer() throws IOException {
         try {
             // Get name, and description fields and assign to variables
@@ -75,7 +84,6 @@ public class ServerControl implements Initializable {
 
             // Setup body view
 
-            // textFlow.setLineSpacing(20.0f);
             scrollPane.setFitToWidth(true);
             scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
@@ -105,7 +113,10 @@ public class ServerControl implements Initializable {
         }
     }
 
-    // Listens for incoming connections
+    /**
+     * Listens for incoming client connections
+     * @throws IOException
+     */
     public void listenConnections () throws IOException {
         int numOfMembers;
         while(true){
@@ -123,15 +134,28 @@ public class ServerControl implements Initializable {
         }
     }
 
+    /**
+     * Add thread to the thread map with username as key for reference in routing
+     * @param username
+     * @param thread
+     */
     public void addThreadToMap(String username, ServerThread thread) {
         connectionThreads.put(username, thread);
     }
 
-    // Routing messages dynamically
+    /**
+     * Append the received message from clients to the server display
+     * @param msg
+     */
     public void appendTextFlow(String msg) {
         textFlow.getChildren().add(new Text(msg + "\n\n"));
     }
 
+    /**
+     * Route the incoming message from source client to destination client
+     * @param msg
+     * @throws IOException
+     */
     public void routeMessage(messageStruct msg) throws IOException {
         switch(msg.type){
             case "connect":
@@ -196,6 +220,10 @@ public class ServerControl implements Initializable {
         }
     }
 
+    /**
+     * Save the server display log on a text file
+     * @throws IOException
+     */
     public void saveLog() throws IOException {
         // TODO: Save log array to a text file
         String outputString = "";
@@ -204,15 +232,35 @@ public class ServerControl implements Initializable {
             outputString += l.substring(0, l.length() - 1);
         }
         Date timeNow = new Date();
-        FileWriter output = new FileWriter("src/app/logs/" + timeNow + ".txt");
-        output.write(outputString);
-        output.close();
+
+        // Choose the text file to save the log string. If file doesn't exist, it creates a new one.
+        FileChooser fc = new FileChooser();
+        String finalOutputString = outputString;
+        Platform.runLater(()->{
+            Stage fcStage = new Stage();
+            fc.setInitialFileName(timeNow.toString() + ".txt");
+            File f = fc.showSaveDialog(fcStage);
+            Path path = Paths.get(f.getPath());
+            try {
+                PrintWriter pw = new PrintWriter(new FileWriter(String.valueOf(path), false)).printf("%s", finalOutputString);
+                pw.close();
+                System.out.println(finalOutputString);
+                System.out.println(String.valueOf(path));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         Platform.runLater(()->{
-            appendTextFlow(String.format("[%s]    %s", timeNow.toString(), "LOG HAS BEEN SAVED IN LOGS FOLDER!"));
+            appendTextFlow(String.format("[%s]    %s", timeNow.toString(), "LOG HAS BEEN SAVED!"));
         });
     }
 
+    /**
+     * Class inherited from implemented class
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

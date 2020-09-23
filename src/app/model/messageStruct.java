@@ -13,6 +13,15 @@ public class messageStruct implements Serializable {
     public String textMessage;
     public fileStruct file;
 
+    /**
+     * Initializes the message object
+     * @param type
+     * @param timestamp
+     * @param source
+     * @param destination
+     * @param textMessage
+     * @param file
+     */
     public messageStruct(String type, Date timestamp, String source, String destination, String textMessage, fileStruct file) {
         this.type = type;
         // DIFF TYPES

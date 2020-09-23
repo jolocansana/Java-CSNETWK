@@ -63,12 +63,16 @@ public class ClientControl implements Initializable {
     private String serverIP;
     private String serverPort;
 
-    // TODO: Make Stream variables
     private Socket clientEndpoint;
     private ObjectInputStream reader;
     private ObjectOutputStream writer;
 
-    // Connect user to server, and assign text fields to variables
+
+    /**
+     * Connect user to server, and assign text fields to variables
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void login() throws IOException, ClassNotFoundException {
         // TODO: Get username, IP of server, and port to connect
         username = usernameField.getText();
@@ -109,13 +113,17 @@ public class ClientControl implements Initializable {
             errorText.setVisible(false);
 
         } catch (Exception e) {
+            // If server IP and port is wrong
             e.printStackTrace();
             errorText.setText("Server IP or Port is invalid!");
             errorText.setVisible(true);
         }
     }
 
-    // Sends message to server (text, and/or file)
+    /**
+     * Sends message to server. Use messageStruct for messages.
+     * @throws IOException
+     */
     public void sendMessage() throws IOException {
         if (!(textField.getText().equals(""))){
             // Get current time, format, and make text object for time
@@ -143,7 +151,10 @@ public class ClientControl implements Initializable {
         }
     }
 
-    // Access local filesystem, reads file, and prepares file for transport
+    /**
+     * Access local filesystem, reads file, and prepares file for transport with messageStruct
+     * @throws IOException
+     */
     public void readFile() throws IOException {
         // TODO: Open file directory, when Ok, send file to server
         FileChooser fc = new FileChooser();
@@ -171,11 +182,15 @@ public class ClientControl implements Initializable {
         scrollPane.vvalueProperty().bind(textFlow.heightProperty());
         textField.setText("");
 
-        // TODO: Send file to server with timestamp, source username, dest username, and file object (Use messageStruct to construct message)
+        // Send file to server with timestamp, source username, dest username, and file object (Use messageStruct to construct message)
         writer.writeObject(new messageStruct("file", timeNow, username, destUsername, message, new fileStruct(f.getName(), Files.readAllBytes(f.toPath()))));
     }
 
-    // Listens to server for any broadcast on update(new, leave) members or new message/file via DataInputStream
+    /**
+     * Listens to server for any broadcast on update(new, leave) members or new message/file via DataInputStream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void listenServer() throws IOException, ClassNotFoundException {
 
         messageStruct obj;
@@ -194,7 +209,6 @@ public class ClientControl implements Initializable {
                     Platform.runLater(()->{
                         textFlow.getChildren().clear();
                     });
-                    // TODO: Add connected string again since it was removed since establish requests comes after connect
                 }
 
                 inputField.setVisible(true);
@@ -275,7 +289,11 @@ public class ClientControl implements Initializable {
         }
     }
 
-    // Logs current user out
+
+    /**
+     * Logs current user out
+     * @throws IOException
+     */
     public void logOut() throws IOException {
         // TODO: On log out, disconnect from server and go back to login screen
         Date timeNow = new Date();
@@ -285,12 +303,21 @@ public class ClientControl implements Initializable {
         loginPane.setVisible(true);
     }
 
+    /**
+     * Listens to enter key press to send message
+     * @param e
+     * @throws IOException
+     */
     @FXML
-    // On enter submission
     public void onEnter(ActionEvent e) throws IOException{
         sendMessage();
     }
 
+    /**
+     * Class inherited from implemented class
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

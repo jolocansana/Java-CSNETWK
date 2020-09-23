@@ -9,6 +9,11 @@ import javafx.stage.Stage;
 
 public class ClientDriver extends Application {
 
+    /**
+     * Starts the FXML Application, creates the main stage, and shows it
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Client start

@@ -1,0 +1,32 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Client">
+    <output-path>$PROJECT_DIR$/out/artifacts/Client</output-path>
+    <root id="archive" name="DLSUsap.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/clientINF/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="DLSUsap" />
+      <element id="extracted-dir" path="$PATH_TO_FX$/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FX$/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FX$/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FX$/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FX$/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FX$/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FX$/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_TO_FX$/javafx.web.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PATH_TO_FX$/libdecora_sse.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libfxplugins.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libglass.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libglib-lite.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libgstreamer-lite.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libjavafx_font.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libjavafx_iio.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libjfxmedia_avf.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libjfxmedia.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libjfxwebkit.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libprism_common.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libprism_es2.dylib" />
+      <element id="file-copy" path="$PATH_TO_FX$/libprism_sw.dylib" />
+    </root>
+  </artifact>
+</component>

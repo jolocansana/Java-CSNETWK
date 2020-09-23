@@ -15,14 +15,23 @@ public class ServerThread extends Thread {
     public ServerControl source;
     public String threadID;
 
+    /**
+     * Initialize the ServerThread object
+     * @param endpoint
+     * @param source
+     * @throws IOException
+     */
     public ServerThread (Socket endpoint, ServerControl source) throws IOException {
         serverEndpoint = endpoint;
         this.source = source;
     }
 
+    /**
+     * Actual running instance of the thread. Listens to messages from client endpoint.
+     */
     @Override
     public void run() {
-        // TODO: Read on DataInputStream
+        // Read on DataInputStream
         try {
             dosWriter = new ObjectOutputStream(serverEndpoint.getOutputStream());
             disReader = new ObjectInputStream(serverEndpoint.getInputStream());
